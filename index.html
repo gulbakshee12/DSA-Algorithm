@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSA Algorithm Visualizer - Sorting Algorithms</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="header-brand">
+        <span class="badge-tag">Academic Tool</span>
+        <h1>DSA Algorithm Visualizer</h1>
+      </div>
+      <div class="header-meta">
+        <span class="meta-item"><strong>Subject:</strong> Data Structures & Algorithms</span>
+        <span class="meta-item"><strong>Level:</strong> Second Year UG</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-layout">
+
+    <!-- Section 1: Title & Introduction -->
+    <section class="card intro-card" id="intro-section">
+      <div class="intro-content">
+        <h2>Interactive Sorting Visualization</h2>
+        <p>
+          Welcome to the <strong>Sorting Algorithms Visualizer</strong>! Designed for computer science undergraduate students,
+          this tool provides an interactive step-by-step visual execution of fundamental sorting algorithms.
+          Watch array elements swap in real time, inspect code line execution, and analyze step counts and time complexities.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2: Learning Outcomes -->
+    <section class="card outcomes-card" id="outcomes-section">
+      <h3>🎯 Learning Outcomes</h3>
+      <div class="outcomes-grid">
+        <div class="outcome-item">
+          <div class="outcome-icon">1</div>
+          <div>
+            <h4>Visual Execution Analysis</h4>
+            <p>Understand how array elements shift, compare, and swap step-by-step through color-coded animation.</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-icon">2</div>
+          <div>
+            <h4>Complexity & Performance Comparison</h4>
+            <p>Compare actual comparisons and swaps against theoretical Big-O time complexity $O(n^2)$ and $O(n)$.</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-icon">3</div>
+          <div>
+            <h4>Identify Algorithmic Pitfalls</h4>
+            <p>Learn common mistakes in implementation, edge cases, loop boundaries, and stability characteristics.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace Grid: Controls + Visualization -->
+    <div class="workspace-grid">
+
+      <!-- Left Column: Settings, Controls & Input -->
+      <aside class="controls-sidebar">
+
+        <!-- Section 3: Algorithm Selection & Specs -->
+        <section class="card control-group">
+          <h3>1. Select Algorithm</h3>
+          <div class="select-wrapper">
+            <label for="algo-select">Sorting Algorithm:</label>
+            <select id="algo-select" class="form-control">
+              <option value="bubble">Bubble Sort</option>
+              <option value="selection">Selection Sort</option>
+              <option value="insertion">Insertion Sort</option>
+            </select>
+          </div>
+
+          <!-- Algorithm Information Panel -->
+          <div id="algo-info" class="algo-info-panel">
+            <div class="info-badge-row">
+              <span id="badge-time" class="info-badge">Best: O(n) | Worst: O(n²)</span>
+              <span id="badge-space" class="info-badge badge-secondary">Space: O(1)</span>
+              <span id="badge-stable" class="info-badge badge-accent">Stable</span>
+            </div>
+            <p id="algo-desc" class="algo-description">
+              Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 6 & 7: Controls, Array Options & Speed -->
+        <section class="card control-group">
+          <h3>2. Controls & Array Options</h3>
+          
+          <div class="control-actions">
+            <button id="btn-start" class="btn btn-primary">▶ Start</button>
+            <button id="btn-pause" class="btn btn-warning" disabled>⏸ Pause</button>
+            <button id="btn-step" class="btn btn-secondary" title="Step forward 1 operation">⏭ Step</button>
+            <button id="btn-reset" class="btn btn-outline">🔄 Reset</button>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="speed-range">Animation Speed:</label>
+              <span id="speed-label">500 ms</span>
+            </div>
+            <input type="range" id="speed-range" min="50" max="1000" step="50" value="500">
+            <div class="slider-labels">
+              <span>Fast</span>
+              <span>Slow</span>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="size-range">Array Size:</label>
+              <span id="size-label">12 elements</span>
+            </div>
+            <input type="range" id="size-range" min="5" max="25" step="1" value="12">
+            <button id="btn-generate" class="btn btn-small btn-block">🎲 Generate Random Array</button>
+          </div>
+
+          <!-- Section 7: Custom Input Array Option -->
+          <div class="custom-input-box">
+            <label for="custom-array-input">Custom Array (comma-separated numbers):</label>
+            <div class="input-inline">
+              <input type="text" id="custom-array-input" class="form-control" placeholder="e.g. 42, 15, 8, 23, 4, 16">
+              <button id="btn-apply-custom" class="btn btn-secondary">Apply</button>
+            </div>
+            <div id="custom-input-error" class="error-msg"></div>
+          </div>
+        </section>
+
+      </aside>
+
+      <!-- Right Column: Visualization & Real-time Metrics -->
+      <div class="visualization-column">
+
+        <!-- Section 4: Visualization Area -->
+        <section class="card visualizer-card">
+          <div class="visualizer-header">
+            <h3>3. Visualization Canvas</h3>
+            <div class="legend-bar">
+              <span class="legend-item"><span class="legend-color color-default"></span> Default</span>
+              <span class="legend-item"><span class="legend-color color-compare"></span> Comparing</span>
+              <span class="legend-item"><span class="legend-color color-swap"></span> Swapping/Shift</span>
+              <span class="legend-item"><span class="legend-color color-target"></span> Min/Current Key</span>
+              <span class="legend-item"><span class="legend-color color-sorted"></span> Sorted</span>
+            </div>
+          </div>
+
+          <!-- Bars Canvas Container -->
+          <div id="bars-container" class="bars-container">
+            <!-- Dynamically generated array bars will appear here -->
+          </div>
+
+          <!-- Real-time Stats Header -->
+          <div class="stats-panel">
+            <div class="stat-box">
+              <span class="stat-label">Comparisons</span>
+              <span id="stat-comparisons" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Swaps / Shifts</span>
+              <span id="stat-swaps" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Total Steps</span>
+              <span id="stat-steps" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Status</span>
+              <span id="stat-status" class="stat-value status-ready">Ready</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 9: Steps Explanation & Live Log -->
+        <section class="card step-explanation-card">
+          <h3>4. Step-by-Step Explanation</h3>
+          <div class="explanation-box">
+            <div id="current-step-text" class="step-highlight">
+              Select an algorithm and click <strong>Start</strong> to begin execution.
+            </div>
+            <div class="step-log-container">
+              <label>Execution History:</label>
+              <ul id="step-log-list" class="step-log-list">
+                <li class="log-item info">Ready to visualize sorting algorithm.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+    <!-- Section 11: Final Completion Message Banner (Hidden by default) -->
+    <div id="completion-banner" class="card completion-banner hidden">
+      <div class="completion-content">
+        <div class="completion-icon">🎉</div>
+        <div>
+          <h3>Sorting Complete!</h3>
+          <p id="completion-details">
+            The array has been fully sorted. Final statistics: 0 comparisons and 0 swaps executed.
+          </p>
+        </div>
+      </div>
+      <button id="btn-close-banner" class="btn btn-small">Close</button>
+    </div>
+
+    <!-- Bottom Grid: Code Display & Common Mistakes -->
+    <div class="bottom-grid">
+
+      <!-- Section 8: Code Display Section -->
+      <section class="card code-card">
+        <div class="code-header">
+          <h3>5. Algorithm Code & Pseudocode</h3>
+          <select id="language-select" class="form-control-sm">
+            <option value="pseudocode">Pseudocode</option>
+            <option value="cpp">C++</option>
+            <option value="js">JavaScript</option>
+          </select>
+        </div>
+        <div class="code-container">
+          <pre id="code-block"><code><!-- Populated by script.js --></code></pre>
+        </div>
+      </section>
+
+      <!-- Section 10: Common Mistakes -->
+      <section class="card mistakes-card">
+        <h3>6. Common Student Pitfalls & Edge Cases</h3>
+        <div id="mistakes-content" class="mistakes-list">
+          <!-- Dynamically updated based on algorithm selection -->
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>DSA Algorithm Visualizer | Academic Practice Tool for Computer Science Students</p>
+      <p class="footer-sub">Designed for off-line use & GitHub Pages deployment. Standard HTML, CSS, JavaScript.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
