@@ -3,255 +3,357 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DSA Algorithm Visualizer - Sorting Algorithms</title>
+  <title>DSA Learning Game - Gamified Data Structures & Algorithms</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="game-theme">
 
-  <!-- Top Navigation Header -->
-  <header class="app-header">
-    <div class="header-container">
-      <div class="header-brand">
-        <span class="badge-tag">Academic Tool</span>
-        <h1>DSA Algorithm Visualizer</h1>
+  <!-- Main Game Container -->
+  <div id="app" class="app-container">
+
+    <!-- Global Top Navigation Bar -->
+    <header class="game-header">
+      <div class="brand">
+        <span class="brand-badge">UG / 2nd Year CS</span>
+        <h1 class="brand-title">🎮 DSA Learning Game</h1>
       </div>
-      <div class="header-meta">
-        <span class="meta-item"><strong>Subject:</strong> Data Structures & Algorithms</span>
-        <span class="meta-item"><strong>Level:</strong> Second Year UG</span>
+      
+      <!-- Top Stats Bar (Active during Gameplay) -->
+      <div id="top-stats-bar" class="top-stats hidden">
+        <div class="stat-pill score-pill">
+          <span class="stat-icon">⭐</span>
+          <span class="stat-label">Score:</span>
+          <span id="game-score" class="stat-val">0</span>
+        </div>
+        <div class="stat-pill combo-pill">
+          <span class="stat-icon">🔥</span>
+          <span id="game-streak" class="stat-val">0x</span>
+        </div>
+        <div class="stat-pill timer-pill">
+          <span class="stat-icon">⏱️</span>
+          <span id="game-timer" class="stat-val">00:00</span>
+        </div>
+        <button id="btn-sound-toggle" class="btn-icon" title="Toggle Sound">🔊</button>
+        <button id="btn-home-nav" class="btn-icon btn-home" title="Home Screen">🏠</button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="main-layout">
-
-    <!-- Section 1: Title & Introduction -->
-    <section class="card intro-card" id="intro-section">
-      <div class="intro-content">
-        <h2>Interactive Sorting Visualization</h2>
-        <p>
-          Welcome to the <strong>Sorting Algorithms Visualizer</strong>! Designed for computer science undergraduate students,
-          this tool provides an interactive step-by-step visual execution of fundamental sorting algorithms.
-          Watch array elements swap in real time, inspect code line execution, and analyze step counts and time complexities.
+    <!-- SCREEN 1: HOME SCREEN -->
+    <section id="screen-home" class="screen screen-active">
+      <div class="hero-card">
+        <div class="hero-badge">Interactive CS Arcade</div>
+        <h2 class="hero-title">Master Sorting Algorithms Through Mini-Games</h2>
+        <p class="hero-subtitle">
+          Designed specifically for 2nd Year Computer Science & Engineering Undergraduates.
+          Solve step-by-step sorting challenges, divide arrays, partition pivots, and ace your university viva exams!
         </p>
+
+        <div class="hero-actions">
+          <button id="btn-start-game" class="btn btn-hero btn-pulse">
+            🚀 Play Game
+          </button>
+          <button id="btn-show-instructions" class="btn btn-secondary">
+            📖 How to Play
+          </button>
+        </div>
+      </div>
+
+      <!-- Level Selection Grid -->
+      <div class="level-select-container">
+        <h3 class="section-heading">Select Level Challenge</h3>
+        <div class="level-grid">
+
+          <!-- Level 1 Card -->
+          <div class="level-card" data-level="1">
+            <div class="level-card-header">
+              <span class="level-number">Level 1</span>
+              <span class="badge badge-easy">Basic</span>
+            </div>
+            <div class="level-icon">🫧</div>
+            <h4 class="level-title">Bubble Sort</h4>
+            <div class="level-subtitle">Adjacent Swap Challenge</div>
+            <p class="level-desc">Compare neighboring elements and decide whether to swap or keep them!</p>
+            <div class="level-meta">
+              <span class="stars-earned" id="stars-lvl-1">⭐⭐⭐</span>
+              <span class="high-score-tag" id="score-lvl-1">Best: 0</span>
+            </div>
+            <button class="btn btn-level-play">Play Level 1</button>
+          </div>
+
+          <!-- Level 2 Card -->
+          <div class="level-card" data-level="2">
+            <div class="level-card-header">
+              <span class="level-number">Level 2</span>
+              <span class="badge badge-medium">Challenge</span>
+            </div>
+            <div class="level-icon">🎯</div>
+            <h4 class="level-title">Selection Sort</h4>
+            <div class="level-subtitle">Minimum Target Challenge</div>
+            <p class="level-desc">Scan unsorted sub-arrays, spot the minimum element, and swap it into place!</p>
+            <div class="level-meta">
+              <span class="stars-earned" id="stars-lvl-2">⭐⭐⭐</span>
+              <span class="high-score-tag" id="score-lvl-2">Best: 0</span>
+            </div>
+            <button class="btn btn-level-play">Play Level 2</button>
+          </div>
+
+          <!-- Level 3 Card -->
+          <div class="level-card" data-level="3">
+            <div class="level-number">Level 3</div>
+            <div class="level-card-header">
+              <span class="level-number">Level 3</span>
+              <span class="badge badge-medium">Puzzle</span>
+            </div>
+            <div class="level-icon">🧩</div>
+            <h4 class="level-title">Insertion Sort</h4>
+            <div class="level-subtitle">Card Insertion Puzzle</div>
+            <p class="level-desc">Pick key elements and insert them into their exact sorted slot like playing cards!</p>
+            <div class="level-meta">
+              <span class="stars-earned" id="stars-lvl-3">⭐⭐⭐</span>
+              <span class="high-score-tag" id="score-lvl-3">Best: 0</span>
+            </div>
+            <button class="btn btn-level-play">Play Level 3</button>
+          </div>
+
+          <!-- Level 4 Card -->
+          <div class="level-card" data-level="4">
+            <div class="level-card-header">
+              <span class="level-number">Level 4</span>
+              <span class="badge badge-hard">Visual Game</span>
+            </div>
+            <div class="level-icon">⚔️</div>
+            <h4 class="level-title">Merge Sort</h4>
+            <div class="level-subtitle">Divide & Conquer Game</div>
+            <p class="level-desc">Divide arrays into halves, then click to merge elements in sorted order!</p>
+            <div class="level-meta">
+              <span class="stars-earned" id="stars-lvl-4">⭐⭐⭐</span>
+              <span class="high-score-tag" id="score-lvl-4">Best: 0</span>
+            </div>
+            <button class="btn btn-level-play">Play Level 4</button>
+          </div>
+
+          <!-- Level 5 Card -->
+          <div class="level-card" data-level="5">
+            <div class="level-card-header">
+              <span class="level-number">Level 5</span>
+              <span class="badge badge-hard">Partition</span>
+            </div>
+            <div class="level-icon">⚡</div>
+            <h4 class="level-title">Quick Sort</h4>
+            <div class="level-subtitle">Pivot Partition Game</div>
+            <p class="level-desc">Select pivots and classify elements left (&lt; Pivot) and right (&ge; Pivot)!</p>
+            <div class="level-meta">
+              <span class="stars-earned" id="stars-lvl-5">⭐⭐⭐</span>
+              <span class="high-score-tag" id="score-lvl-5">Best: 0</span>
+            </div>
+            <button class="btn btn-level-play">Play Level 5</button>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- Section 2: Learning Outcomes -->
-    <section class="card outcomes-card" id="outcomes-section">
-      <h3>🎯 Learning Outcomes</h3>
-      <div class="outcomes-grid">
-        <div class="outcome-item">
-          <div class="outcome-icon">1</div>
-          <div>
-            <h4>Visual Execution Analysis</h4>
-            <p>Understand how array elements shift, compare, and swap step-by-step through color-coded animation.</p>
-          </div>
+    <!-- SCREEN 2: GAMEPLAY SCREEN -->
+    <section id="screen-gameplay" class="screen hidden">
+      
+      <!-- Level Banner & Controls Bar -->
+      <div class="gameplay-banner">
+        <div class="level-header-info">
+          <span id="level-tag" class="level-tag">LEVEL 1</span>
+          <h2 id="level-title-display" class="level-title-display">Bubble Sort Challenge</h2>
         </div>
-        <div class="outcome-item">
-          <div class="outcome-icon">2</div>
-          <div>
-            <h4>Complexity & Performance Comparison</h4>
-            <p>Compare actual comparisons and swaps against theoretical Big-O time complexity $O(n^2)$ and $O(n)$.</p>
-          </div>
-        </div>
-        <div class="outcome-item">
-          <div class="outcome-icon">3</div>
-          <div>
-            <h4>Identify Algorithmic Pitfalls</h4>
-            <p>Learn common mistakes in implementation, edge cases, loop boundaries, and stability characteristics.</p>
-          </div>
+
+        <div class="level-controls">
+          <button id="btn-hint" class="btn btn-warning btn-sm">💡 Hint (-2 pts)</button>
+          <button id="btn-restart-level" class="btn btn-outline btn-sm">🔄 Restart Level</button>
+          <button id="btn-toggle-learn" class="btn btn-secondary btn-sm">📖 Theory & Pseudocode</button>
+          <button id="btn-toggle-viva" class="btn btn-accent btn-sm">🎓 Viva Questions</button>
         </div>
       </div>
-    </section>
 
-    <!-- Main Workspace Grid: Controls + Visualization -->
-    <div class="workspace-grid">
+      <!-- Level Completion Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-labels">
+          <span>Level Progress</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
 
-      <!-- Left Column: Settings, Controls & Input -->
-      <aside class="controls-sidebar">
-
-        <!-- Section 3: Algorithm Selection & Specs -->
-        <section class="card control-group">
-          <h3>1. Select Algorithm</h3>
-          <div class="select-wrapper">
-            <label for="algo-select">Sorting Algorithm:</label>
-            <select id="algo-select" class="form-control">
-              <option value="bubble">Bubble Sort</option>
-              <option value="selection">Selection Sort</option>
-              <option value="insertion">Insertion Sort</option>
-            </select>
+      <!-- Interactive Game Area Container -->
+      <div class="game-arena-grid">
+        
+        <!-- Center Arena Stage -->
+        <main class="arena-stage">
+          <div id="instruction-prompt" class="instruction-prompt">
+            Click on adjacent elements to compare them!
           </div>
 
-          <!-- Algorithm Information Panel -->
-          <div id="algo-info" class="algo-info-panel">
-            <div class="info-badge-row">
-              <span id="badge-time" class="info-badge">Best: O(n) | Worst: O(n²)</span>
-              <span id="badge-space" class="info-badge badge-secondary">Space: O(1)</span>
-              <span id="badge-stable" class="info-badge badge-accent">Stable</span>
-            </div>
-            <p id="algo-desc" class="algo-description">
-              Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
-            </p>
-          </div>
-        </section>
+          <!-- Floating Score Popup Container -->
+          <div id="score-popup-container" class="popup-container"></div>
 
-        <!-- Section 6 & 7: Controls, Array Options & Speed -->
-        <section class="card control-group">
-          <h3>2. Controls & Array Options</h3>
-          
-          <div class="control-actions">
-            <button id="btn-start" class="btn btn-primary">▶ Start</button>
-            <button id="btn-pause" class="btn btn-warning" disabled>⏸ Pause</button>
-            <button id="btn-step" class="btn btn-secondary" title="Step forward 1 operation">⏭ Step</button>
-            <button id="btn-reset" class="btn btn-outline">🔄 Reset</button>
+          <!-- Dynamic Visual Playground Area -->
+          <div id="game-canvas" class="game-canvas">
+            <!-- Dynamically populated per level -->
           </div>
 
-          <div class="slider-group">
-            <div class="slider-header">
-              <label for="speed-range">Animation Speed:</label>
-              <span id="speed-label">500 ms</span>
-            </div>
-            <input type="range" id="speed-range" min="50" max="1000" step="50" value="500">
-            <div class="slider-labels">
-              <span>Fast</span>
-              <span>Slow</span>
-            </div>
+          <!-- Feedback / Action Bar -->
+          <div id="action-bar" class="action-bar">
+            <!-- Level specific controls like Swap / No Swap buttons, Partition buckets, etc. -->
+          </div>
+        </main>
+
+        <!-- Right Side Drawer: Theory / Pseudocode / Viva (Collapsible) -->
+        <aside id="side-drawer" class="side-drawer hidden">
+          <div class="drawer-header">
+            <h3 id="drawer-title">Learning & Theory</h3>
+            <button id="btn-close-drawer" class="btn-close">✖</button>
           </div>
 
-          <div class="slider-group">
-            <div class="slider-header">
-              <label for="size-range">Array Size:</label>
-              <span id="size-label">12 elements</span>
+          <!-- Drawer Content Tab 1: Theory & Pseudocode -->
+          <div id="drawer-theory-content" class="drawer-body">
+            <div class="theory-section">
+              <h4>📌 Explanation</h4>
+              <p id="theory-explanation">Algorithm description...</p>
             </div>
-            <input type="range" id="size-range" min="5" max="25" step="1" value="12">
-            <button id="btn-generate" class="btn btn-small btn-block">🎲 Generate Random Array</button>
-          </div>
 
-          <!-- Section 7: Custom Input Array Option -->
-          <div class="custom-input-box">
-            <label for="custom-array-input">Custom Array (comma-separated numbers):</label>
-            <div class="input-inline">
-              <input type="text" id="custom-array-input" class="form-control" placeholder="e.g. 42, 15, 8, 23, 4, 16">
-              <button id="btn-apply-custom" class="btn btn-secondary">Apply</button>
+            <div class="theory-section">
+              <h4>💻 Pseudocode</h4>
+              <pre id="theory-pseudocode"><code>// Pseudocode lines</code></pre>
             </div>
-            <div id="custom-input-error" class="error-msg"></div>
-          </div>
-        </section>
 
-      </aside>
-
-      <!-- Right Column: Visualization & Real-time Metrics -->
-      <div class="visualization-column">
-
-        <!-- Section 4: Visualization Area -->
-        <section class="card visualizer-card">
-          <div class="visualizer-header">
-            <h3>3. Visualization Canvas</h3>
-            <div class="legend-bar">
-              <span class="legend-item"><span class="legend-color color-default"></span> Default</span>
-              <span class="legend-item"><span class="legend-color color-compare"></span> Comparing</span>
-              <span class="legend-item"><span class="legend-color color-swap"></span> Swapping/Shift</span>
-              <span class="legend-item"><span class="legend-color color-target"></span> Min/Current Key</span>
-              <span class="legend-item"><span class="legend-color color-sorted"></span> Sorted</span>
-            </div>
-          </div>
-
-          <!-- Bars Canvas Container -->
-          <div id="bars-container" class="bars-container">
-            <!-- Dynamically generated array bars will appear here -->
-          </div>
-
-          <!-- Real-time Stats Header -->
-          <div class="stats-panel">
-            <div class="stat-box">
-              <span class="stat-label">Comparisons</span>
-              <span id="stat-comparisons" class="stat-value">0</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-label">Swaps / Shifts</span>
-              <span id="stat-swaps" class="stat-value">0</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-label">Total Steps</span>
-              <span id="stat-steps" class="stat-value">0</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-label">Status</span>
-              <span id="stat-status" class="stat-value status-ready">Ready</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 9: Steps Explanation & Live Log -->
-        <section class="card step-explanation-card">
-          <h3>4. Step-by-Step Explanation</h3>
-          <div class="explanation-box">
-            <div id="current-step-text" class="step-highlight">
-              Select an algorithm and click <strong>Start</strong> to begin execution.
-            </div>
-            <div class="step-log-container">
-              <label>Execution History:</label>
-              <ul id="step-log-list" class="step-log-list">
-                <li class="log-item info">Ready to visualize sorting algorithm.</li>
+            <div class="theory-section">
+              <h4>📝 Key Notes & Properties</h4>
+              <ul id="theory-notes" class="notes-list">
+                <!-- Notes items -->
               </ul>
             </div>
+
+            <div class="theory-section">
+              <h4>⏱️ Time & Space Complexity</h4>
+              <div class="complexity-table">
+                <div class="comp-row"><span>Best Case:</span> <strong id="comp-best">O(n)</strong></div>
+                <div class="comp-row"><span>Average Case:</span> <strong id="comp-avg">O(n²)</strong></div>
+                <div class="comp-row"><span>Worst Case:</span> <strong id="comp-worst">O(n²)</strong></div>
+                <div class="comp-row"><span>Auxiliary Space:</span> <strong id="comp-space">O(1)</strong></div>
+              </div>
+            </div>
           </div>
-        </section>
+
+          <!-- Drawer Content Tab 2: Viva Questions -->
+          <div id="drawer-viva-content" class="drawer-body hidden">
+            <div class="viva-header">
+              <h4>🎓 UG Viva Voce Questions</h4>
+              <p class="viva-sub">Essential questions for your practical exam! Reveal answer to review.</p>
+            </div>
+            <div id="viva-questions-list" class="viva-list">
+              <!-- Viva question cards generated dynamically -->
+            </div>
+          </div>
+        </aside>
 
       </div>
+    </section>
 
-    </div>
+    <!-- SCREEN 3: LEVEL SUCCESS / FINAL GAME OVER SCREEN -->
+    <section id="screen-final" class="screen hidden">
+      <div class="final-card">
+        <div class="trophy-icon">🏆</div>
+        <h2 class="final-title">You Completed the DSA Game!</h2>
+        <p class="final-subtitle">Awesome work! You've successfully completed all 5 interactive sorting algorithm challenges.</p>
 
-    <!-- Section 11: Final Completion Message Banner (Hidden by default) -->
-    <div id="completion-banner" class="card completion-banner hidden">
-      <div class="completion-content">
-        <div class="completion-icon">🎉</div>
-        <div>
-          <h3>Sorting Complete!</h3>
-          <p id="completion-details">
-            The array has been fully sorted. Final statistics: 0 comparisons and 0 swaps executed.
-          </p>
+        <!-- Score & Stats Breakdown -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-card-label">Total Score</span>
+            <span id="final-score" class="stat-card-val">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-label">Performance Rank</span>
+            <span id="final-rank" class="stat-card-val rank-s">S Rank</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-label">Total Time</span>
+            <span id="final-time" class="stat-card-val">02:45</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-label">Max Streak</span>
+            <span id="final-streak" class="stat-card-val">12x</span>
+          </div>
+        </div>
+
+        <!-- Mastered Algorithms List -->
+        <div class="mastered-box">
+          <h4>Algorithms Mastered:</h4>
+          <div class="badges-row">
+            <span class="badge-algo">Bubble Sort</span>
+            <span class="badge-algo">Selection Sort</span>
+            <span class="badge-algo">Insertion Sort</span>
+            <span class="badge-algo">Merge Sort</span>
+            <span class="badge-algo">Quick Sort</span>
+          </div>
+        </div>
+
+        <div class="final-actions">
+          <button id="btn-restart-game" class="btn btn-hero">
+            🔄 Restart Full Game
+          </button>
+          <button id="btn-replay-level-select" class="btn btn-secondary">
+            📋 Level Select
+          </button>
         </div>
       </div>
-      <button id="btn-close-banner" class="btn btn-small">Close</button>
+    </section>
+
+    <!-- INSTRUCTIONS MODAL -->
+    <div id="modal-instructions" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🎮 How to Play DSA Learning Game</h3>
+          <button id="btn-close-instructions" class="btn-close">✖</button>
+        </div>
+        <div class="modal-body">
+          <div class="rule-item">
+            <span class="rule-num">1</span>
+            <div>
+              <strong>5 Interactive Algorithmic Levels</strong>
+              <p>Work through Bubble, Selection, Insertion, Merge, and Quick Sort games step-by-step.</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-num">2</span>
+            <div>
+              <strong>Score & Streak System</strong>
+              <p>Correct moves earn <span class="score-plus">+10 points</span> and build your combo streak! Incorrect choices lose <span class="score-minus">-5 points</span>.</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-num">3</span>
+            <div>
+              <strong>Divide & Partition Games</strong>
+              <p>Level 4 (Merge Sort): Divide arrays into halves, then click the correct smaller element to merge. Level 5 (Quick Sort): Partition elements into Left (&lt; Pivot) and Right (&ge; Pivot) buckets!</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-num">4</span>
+            <div>
+              <strong>Theory & Viva Questions</strong>
+              <p>Use "Theory & Pseudocode" and "Viva Questions" during gameplay to prepare for university exams and gain bonus points.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-got-it" class="btn btn-primary">Got it! Let's Play</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Bottom Grid: Code Display & Common Mistakes -->
-    <div class="bottom-grid">
-
-      <!-- Section 8: Code Display Section -->
-      <section class="card code-card">
-        <div class="code-header">
-          <h3>5. Algorithm Code & Pseudocode</h3>
-          <select id="language-select" class="form-control-sm">
-            <option value="pseudocode">Pseudocode</option>
-            <option value="cpp">C++</option>
-            <option value="js">JavaScript</option>
-          </select>
-        </div>
-        <div class="code-container">
-          <pre id="code-block"><code><!-- Populated by script.js --></code></pre>
-        </div>
-      </section>
-
-      <!-- Section 10: Common Mistakes -->
-      <section class="card mistakes-card">
-        <h3>6. Common Student Pitfalls & Edge Cases</h3>
-        <div id="mistakes-content" class="mistakes-list">
-          <!-- Dynamically updated based on algorithm selection -->
-        </div>
-      </section>
-
-    </div>
-
-  </main>
-
-  <footer class="app-footer">
-    <div class="footer-container">
-      <p>DSA Algorithm Visualizer | Academic Practice Tool for Computer Science Students</p>
-      <p class="footer-sub">Designed for off-line use & GitHub Pages deployment. Standard HTML, CSS, JavaScript.</p>
-    </div>
-  </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>

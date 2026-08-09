@@ -1,6 +1,6 @@
 {
-  "name": "DSA Algorithm Visualizer",
-  "description": "Interactive step-by-step sorting algorithm visualizer for college CS students.",
+  "name": "DSA Learning Game",
+  "description": "Gamified Data Structures learning web app for UG 2nd year students featuring interactive sorting algorithm mini-games, divide-and-conquer puzzles, score system, and viva prep.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

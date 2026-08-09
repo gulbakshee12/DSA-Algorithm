@@ -1,110 +1,89 @@
-# DSA Algorithm Visualizer
+# 🎮 DSA Learning Game
 
-An interactive, client-side web application designed for second-year undergraduate computer science students to visualize fundamental sorting algorithms step-by-step.
+An interactive, gamified Data Structures and Algorithms (DSA) web application tailored for **Undergraduate (UG) 2nd Year Computer Science & Engineering students**.
 
----
-
-## 🌟 Features
-
-- **Interactive Sorting Visualization**: Real-time animated bar visualization for **Bubble Sort**, **Selection Sort**, and **Insertion Sort**.
-- **Execution Controls**: Play, Pause, Step-by-Step Forward execution, and Reset functions.
-- **Speed & Array Customization**: Adjustable speed slider (50ms - 1000ms), array size slider (5 - 25 elements), and random array generation.
-- **Custom Input Array**: Option to enter comma-separated custom numbers for classroom practice problems.
-- **Real-Time Step Metrics**: Continuous tracking of Comparisons, Swaps/Shifts, Total Steps, and Execution Status.
-- **Synchronized Code Highlighting**: Line-by-line active code highlighting in **Pseudocode**, **C++**, or **JavaScript**.
-- **Live Explanations & Log**: Clear natural language explanations for every comparison, swap, and pass.
-- **Student Pitfalls & Edge Cases**: Educational section highlighting common mistakes made by students for each algorithm.
-- **Zero Dependencies**: Pure standard HTML5, CSS3, and Vanilla JavaScript. Runs directly in any web browser without Node.js or build steps.
+Built purely with standard **HTML5, CSS3, and ES6 JavaScript** with **zero external backend or database dependencies**. It runs offline directly in any browser by opening `index.html`.
 
 ---
 
-## 📁 Files Explanation
+## 🚀 Game Features
 
-The project consists of exactly four static files:
+### 1. Interactive Algorithm Mini-Games
+- **Level 1: Basic Sorting (Bubble Sort)** — Compare adjacent elements and choose whether to swap or maintain order.
+- **Level 2: Selection Sort Challenge** — Scan unsorted sub-arrays, spot the minimum element, and swap it into position.
+- **Level 3: Insertion Sort Puzzle** — Pick key elements and insert them into their exact sorted slot like ordering playing cards.
+- **Level 4: Merge Sort Visual Game** — Recursively divide arrays into halves down to base cases, then click candidate elements to merge them into sorted order.
+- **Level 5: Quick Sort Partition Game** — Select pivots and classify elements into Left Bucket (`< Pivot`) and Right Bucket (`≥ Pivot`).
 
-1. `index.html` - HTML5 semantic structure containing all 11 application sections, including control panels, visual canvas, code viewer, and outcome cards.
-2. `style.css` - Custom CSS stylesheet providing clean academic design, responsive layouts, dark canvas contrast for bars, color-coded animation states, and code highlighting styles.
-3. `script.js` - Pure Vanilla JavaScript engine handling step pre-computation, playback animation timers, custom input validation, state management, and DOM updates.
-4. `README.md` - Documentation guide for students, teachers, and deployment.
+### 2. Gamified Mechanics & Scoring
+- **Score System**: +10 points for correct algorithmic decisions, -5 points for incorrect choices.
+- **Combo Multipliers**: Build consecutive streaks for extra bonus multipliers (`🔥 2x`, `3x`).
+- **Progress Trackers**: Real-time progress bar showing percentage of level completed.
+- **Live Timer**: Track time taken to solve each level.
+- **Synthesized Audio Cues**: Built-in Web Audio API sound effects for clicks, correct moves, errors, and level fanfare.
 
----
-
-## 🚀 How to Deploy on GitHub Pages
-
-Because this application uses standard static HTML, CSS, and JS with relative file paths, deploying to GitHub Pages takes less than 2 minutes:
-
-1. **Create a GitHub Repository**:
-   - Go to [GitHub](https://github.com/) and create a new repository (e.g., `dsa-algorithm-visualizer`).
-2. **Push Project Files**:
-   - Upload or push `index.html`, `style.css`, `script.js`, and `README.md` to the `main` branch.
-3. **Enable GitHub Pages**:
-   - In your GitHub repository, go to **Settings** > **Pages**.
-   - Under **Build and deployment**, select **Source** as `Deploy from a branch`.
-   - Select the `main` branch and `/ (root)` folder.
-   - Click **Save**.
-4. **Access Application**:
-   - After a few moments, your application will be live at:
-     `https://<your-username>.github.io/<repository-name>/`
+### 3. Theory & Viva Voce Preparation
+- **Comprehensive Theory Drawer**: Detailed explanation, formatted pseudocode, key notes, and best/average/worst time & space complexities ($O(n^2)$, $O(n \log n)$, $O(1)$, $O(n)$).
+- **Interactive Viva Cards**: Real university practical exam viva voce questions with click-to-reveal answers and bonus points!
 
 ---
 
-## ➕ How to Add New Algorithms
+## 📂 File Structure
 
-To extend the visualizer with new sorting algorithms (e.g., Quick Sort or Merge Sort):
+The project strictly consists of 4 lightweight, self-contained files:
 
-1. **Add Algorithm Metadata in `script.js`**:
-   Open `script.js` and add a new key inside the `ALGORITHM_DATA` object:
+```
+├── index.html     # Application structure, screen layouts, modal, and drawer components
+├── style.css      # Custom slate arcade styling, animations, responsive grid layouts
+├── script.js       # Game engine state machine, audio synthesizer, and interactive mini-games
+└── README.md      # Game documentation, developer guide, and deployment instructions
+```
+
+---
+
+## 🛠️ How to Edit or Customise Levels (For Teachers & Developers)
+
+All level configuration and mini-game data are centralized in `script.js` inside the `LEVELS_DATA` object.
+
+To modify an existing level or add new questions:
+1. Open `script.js` in any text editor.
+2. Locate `LEVELS_DATA`:
    ```javascript
-   ALGORITHM_DATA.quicksort = {
-     name: "Quick Sort",
-     bestTime: "O(n log n)",
-     worstTime: "O(n²)",
-     space: "O(log n)",
-     stable: "Unstable",
-     description: "Picks an element as pivot and partitions the array around the pivot.",
-     mistakes: [ /* Array of { title, desc } */ ],
-     code: {
-       pseudocode: [ /* Array of string lines */ ],
-       cpp: [ /* Array of string lines */ ],
-       js: [ /* Array of string lines */ ]
-     }
+   const LEVELS_DATA = {
+     1: {
+       number: 1,
+       title: "Bubble Sort Challenge",
+       initialArray: [64, 34, 25, 12, 22, 11, 90],
+       explanation: "...",
+       pseudocode: "...",
+       notes: ["..."],
+       complexity: { best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)" },
+       viva: [
+         { q: "Question text...", ans: "Answer text..." }
+       ]
+     },
+     // ...
    };
    ```
-
-2. **Add Selection Option in `index.html`**:
-   Add an `<option>` element to the `#algo-select` dropdown in `index.html`:
-   ```html
-   <option value="quicksort">Quick Sort</option>
-   ```
-
-3. **Implement Step Generator in `precomputeSteps()` inside `script.js`**:
-   Add a block in `precomputeSteps()` to generate step snapshots (`addStep(highlightsMap, explanationText, codeLineNumber)`):
-   ```javascript
-   else if (algo === 'quicksort') {
-     // Implement partition and recursive step tracking
-   }
-   ```
+3. You can change `initialArray` to test different array configurations or edit the `viva` array to add custom university viva questions!
 
 ---
 
-## 🍎 Editing Instructions for Teachers
+## 🌐 Deploying on GitHub Pages
 
-Teachers and lab instructors can customize this tool for class exercises:
+Since this project requires no server, build step, or node server, deploying to GitHub Pages takes less than a minute:
 
-- **Modifying Default Values**:
-  - To change default array size, edit `value="12"` on `#size-range` in `index.html`.
-  - To adjust initial animation speed, edit `value="500"` on `#speed-range` in `index.html`.
-- **Adding Custom Class Examples**:
-  - Pre-fill specific numbers for homework problems by setting the `value` attribute on `<input id="custom-array-input">`.
-- **Customizing Code Representations**:
-  - Edit the `code` array in `ALGORITHM_DATA` in `script.js` to match the exact pseudocode syntax used in your textbook or syllabus.
-- **Offline Classroom Usage**:
-  - Download or clone the folder and double-click `index.html` to run offline on any computer without internet access.
+1. **Create a GitHub Repository**: Create a new repository on GitHub (e.g., `dsa-learning-game`).
+2. **Push Code**: Commit and push `index.html`, `style.css`, `script.js`, and `README.md` to your `main` branch.
+3. **Enable GitHub Pages**:
+   - Go to your repository **Settings** tab.
+   - Click **Pages** in the left sidebar.
+   - Under **Source**, select `Deploy from a branch`.
+   - Select branch: `main` / `/ (root)` and click **Save**.
+4. **Access Link**: Your game will be live at `https://<your-username>.github.io/dsa-learning-game/` in a few moments!
 
 ---
 
-## 🔒 Privacy & Data Policy
+## 🔒 Privacy & Data Collection Declaration
 
-- **No Data Collection**: No cookies, tracking scripts, or analytics.
-- **No Backend**: Runs 100% locally inside the client's browser.
-- **No Third-Party APIs**: Works completely offline.
+**No Personal Data Collection**: This application operates 100% client-side in the browser. It does not collect, track, transmit, store, or share any personal data, user analytics, IP addresses, or cookies. All scores and game state persist purely in browser memory during the active session.
